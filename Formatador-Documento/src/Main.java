@@ -10,7 +10,7 @@ public class Main {
         System.out.println("3- YAML");
 
         Scanner entrada = new Scanner(System.in);
-        
+
         int opcao = entrada.nextInt();
 
         VeiculoEletrico carro = new VeiculoEletrico();
@@ -20,22 +20,29 @@ public class Main {
         carro.precoSugerido = 150000;
         carro.velocidadeMaxima = 250;
 
-        Uf df= new Uf();
-        df.nome= "Distritio Federal";
-        df.sigla="DF";
+        Uf df = new Uf();
+        df.nome = "Distritio Federal";
+        df.sigla = "DF";
         df.capital = "Brasília";
-        df.cordenada= "Cordenada";
-        df.populacaoUltimoSenso= 1000;
+        df.cordenada = "Cordenada";
+        df.populacaoUltimoSenso = 1000;
         df.area = 10000;
         df.densidade = 10000;
         df.maiorCidade1 = "Taguatinga";
-        df.maiorCidade2= "Ceilandia";
-        df.maiorCidade3= "Sol Nascente";
+        df.maiorCidade2 = "Ceilandia";
+        df.maiorCidade3 = "Sol Nascente";
 
-        InformacaoEstruturada formatoInformacao = new InformacaoEstruturada(df, carro, opcao);
-        formatoInformacao.exibeJson();
-        formatoInformacao.exibeXml();
-        formatoInformacao.exibeYaml();
+        InformacaoEstruturada formatoInformacao = new InformacaoEstruturada(df, carro);
+        if (opcao == 1) {
+            formatoInformacao.exibeJson();
+
+        } else if (opcao == 2) {
+            formatoInformacao.exibeXml();
+
+        } else {
+            formatoInformacao.exibeYaml();
+
+        }
     }
 
 }
