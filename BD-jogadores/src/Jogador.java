@@ -3,9 +3,14 @@ public class Jogador {
     private String funcao;
     private String nomeTime;
     private String patente;
+    private Long id;
 
+    // Construtor vazio necessário para JPA
+    public Jogador() {
+    }
     // Construtor
-    public Jogador(String nome, String funcao, String nomeTime, String patente) {
+    public Jogador(Long id, String nome, String funcao, String nomeTime, String patente) {
+        this.id = id;
         this.nome = nome;
         this.funcao = funcao;
         this.nomeTime = nomeTime;
@@ -13,6 +18,9 @@ public class Jogador {
     }
 
     // Getters
+    public Long getId() {
+        return id;
+    }
     public String getNome() {
         return nome;
     }

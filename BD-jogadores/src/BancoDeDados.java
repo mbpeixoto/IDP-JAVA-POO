@@ -46,7 +46,30 @@ public class BancoDeDados {
         }
     }
 
-    // Método para recuperar jogadores do banco de dados
+    public Jogador buscarJogadorPorId(Long id) throws JogadorNaoEncontradoException {
+        String sql = "SELECT * FROM jogadores WHERE id = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setLong(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String nome = resultSet.getString("nome");
+                String funcao = resultSet.getString("funcao");
+                String nomeTime = resultSet.getString("nomeTime");
+                String patente = resultSet.getString("patente");
+
+                return new Jogador(id, nome, funcao, nomeTime, patente);
+            } else {
+                throw new JogadorNaoEncontradoException("Jogador não encontrado por ID: " + id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new JogadorNaoEncontradoException("Erro ao buscar jogador por ID: " + id);
+        }
+    }
+
     public List<Jogador> recuperarJogadores() {
         List<Jogador> jogadores = new ArrayList<>();
         String sql = "SELECT * FROM jogadores";
@@ -55,12 +78,13 @@ public class BancoDeDados {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                Long id = resultSet.getLong("id");
                 String nome = resultSet.getString("nome");
                 String funcao = resultSet.getString("funcao");
                 String nomeTime = resultSet.getString("nomeTime");
                 String patente = resultSet.getString("patente");
 
-                Jogador jogador = new Jogador(nome, funcao, nomeTime, patente);
+                Jogador jogador = new Jogador(id, nome, funcao, nomeTime, patente);
                 jogadores.add(jogador);
             }
         } catch (SQLException e) {
